@@ -9,7 +9,7 @@
 #include "Mandelbrot.hpp"
 
 Mandelbrot::Mandelbrot(int _width){
-    center = ofVec2f(-0.7, 0.0);
+    center = ofVec2f(-0.10, 0.0);
     size = 1.0;
     
     frameWidth = _width/2;
@@ -20,6 +20,7 @@ int Mandelbrot::checkDivergence(double a, double b){
     
     double x = 0.0, y = 0.0, x1, y1;
     
+    /*
     for(int i=1; i<NMAX; i++){
         x1 = x*x - y*y + a;
         y1 = 2*x*y + b;
@@ -28,6 +29,20 @@ int Mandelbrot::checkDivergence(double a, double b){
         y = y1;
     }
     
+    return 0;
+     */
+    
+    
+    for(int i=1; i<NMAX; i++){
+        x1 = pow(x,4) + pow(y,4) - 6*x*x*y*y + a;
+        y1 = 4*x*y*(x*x-y*y) + b;
+        
+        //cout << x1 + y1 << endl;
+        if(x1*x1 + y1*y1 > 4.0) return i;
+        
+        x = x1;
+        y = y1;
+    }
     return 0;
     
 }

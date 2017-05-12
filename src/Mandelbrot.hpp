@@ -21,6 +21,11 @@ private:
     int NMAX = 200;
     vector<ofColor> colorSet;
     
+    int mode = 1; //calc Mode
+    int grayScaleMax = 10;
+    float valueForCheckDivergence = 4.0;
+    
+    
     
 public:
     Mandelbrot(int _width);
@@ -30,7 +35,16 @@ public:
     void draw();
     
     
-    void zoomIn(ofVec2f point);
+    
+    //setter
+    
+    void setSize(float _size);
+    void setGrayScale(float _grayScaleMax);
+    void setValueForCheckDivergence(float _num);
+    void setMode(int _mode);
+    void move(ofVec2f point); //point value is -1 to 1
+    void zoomIn();
+    void zoomOut();
 };
 
 

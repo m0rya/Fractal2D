@@ -2,6 +2,8 @@
 GumowskiMira gm(1500, 500, 500);
 Mandelbrot man(500);
 
+GUI_Mandelbrot gui_man(man);;
+
 //--------------------------------------------------------------
 void ofApp::setup(){
     ofBackground(0, 0, 0);
@@ -14,6 +16,8 @@ void ofApp::setup(){
     gui.add(valueOfU.setup("value of u", -0.2, -1, 1));
     gui.add(size.setup("size", 30, 10, 60));
     gui.add(numOfPoint.setup("num of Point", 1500, 1000, 4000));
+    
+    gui_man.setGUI();
 }
 
 //--------------------------------------------------------------
@@ -51,7 +55,8 @@ void ofApp::keyPressed(int key){
     }
     
     if(key == 'h'){
-        bHideGui = !bHideGui;
+        //bHideGui = !bHideGui;
+        gui_man.toggleVisible();
     }
 
 }
@@ -79,9 +84,11 @@ void ofApp::mousePressed(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
+    /*
     ofVec2f point = ofVec2f(x, y);
     
     man.zoomIn(point);
+     */
 }
 
 //--------------------------------------------------------------
@@ -108,3 +115,7 @@ void ofApp::gotMessage(ofMessage msg){
 void ofApp::dragEvent(ofDragInfo dragInfo){ 
 
 }
+
+//--------------------------------------------------------------
+
+

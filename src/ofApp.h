@@ -4,6 +4,9 @@
 #include "GumowskiMira.hpp"
 #include "ofxGui.h"
 #include "Mandelbrot.hpp"
+#include "ofxUI.h"
+#include "GUI_Setting.hpp"
+
 
 class ofApp : public ofBaseApp{
 
@@ -32,4 +35,7 @@ class ofApp : public ofBaseApp{
     ofxIntSlider size;
     ofxIntSlider numOfPoint;
     bool bHideGui = true;
+    
+    
+
 };

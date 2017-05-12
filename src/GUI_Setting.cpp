@@ -23,26 +23,28 @@ void GUI_Mandelbrot::setGUI(){
     names.push_back("1");
     names.push_back("2");
     names.push_back("3");
+    names.push_back("4");
+    
+    ofColor paddColor = ofColor(0,0,0, 255);
+    gui->setDrawBack(true);
     
     gui->addSpacer();
-    gui->addSlider("Size", 0.2, 2.5, 1.0);
+    gui->addIntSlider("Gray Scale Max", 1, 20, 10)->setColorPadded(paddColor);
     gui->addSpacer();
-    gui->addIntSlider("Gray Scale Max", 1, 100, 10);
+    gui->addSlider("Value for Checking Divergence", 1.0, 10.0, 4.0)->setColorPadded(paddColor);
     gui->addSpacer();
-    gui->addSlider("Value for Checking Divergence", 1.0, 10.0, 4.0);
+    gui->addRadio("Mode of Calc", names, OFX_UI_ORIENTATION_HORIZONTAL)->setColorPadded(paddColor);
     gui->addSpacer();
-    gui->addRadio("Mode of Calc", names, OFX_UI_ORIENTATION_HORIZONTAL);
+    gui->add2DPad("Move", ofVec2f(-1.0, 1.0), ofVec2f(-1.0, 1.0), ofVec2f(0.0, 0.0))->setColorPadded(paddColor);
     gui->addSpacer();
-    gui->add2DPad("Move", ofVec2f(-1.0, 1.0), ofVec2f(-1.0, 1.0), ofVec2f(0.0, 0.0));
+    gui->addLabelButton("Calc Graph", false)->setColorPadded(paddColor);
     gui->addSpacer();
-    gui->addLabelButton("Calc Graph", false);
+    gui->addLabelButton("Zoom In", false)->setColorPadded(paddColor);
     gui->addSpacer();
-    gui->addLabelButton("Zoom In", false);
-    gui->addSpacer();
-    gui->addLabelButton("Zoom Out", false);
+    gui->addLabelButton("Zoom Out", false)->setColorPadded(paddColor);
     
     
-    gui->setTheme(theme);
+    //gui->setTheme(theme);
     gui->autoSizeToFitWidgets();
     
     ofAddListener(gui->newGUIEvent, this, &GUI_Mandelbrot::guiEvent);
@@ -52,12 +54,7 @@ void GUI_Mandelbrot::setGUI(){
 void GUI_Mandelbrot::guiEvent(ofxUIEventArgs &e){
     string name = e.widget->getName();
     
-    if(name == "Size"){
-        ofxUISlider *n = (ofxUISlider *)e.widget;
-        obj->setSize(n->getValue());
-        
-        
-    }else if(name == "Gray Scale Max"){
+  if(name == "Gray Scale Max"){
         ofxUIIntSlider *n = (ofxUIIntSlider *)e.widget;
         obj->setGrayScale(n->getValue());
         

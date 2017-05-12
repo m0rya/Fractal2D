@@ -64,20 +64,27 @@ int Mandelbrot::checkDivergence(double a, double b){
         return 0;
     }else if(mode == 3){
         
-        double x2, y2;
-        
         for(int i=1; i<NMAX; i++){
-            x2 = x*x;
-            y2 = y*y;
-            
-            x1 = (x2*y2-6) * (x+y) *x2*y2 + a;
-            y1 = 4*x*y * (x2-y2) * (x+y) + b;
+            x1 = pow(x, 5) + x*y*(pow(y,3) + 4*y*y - 10*x*x*y) + a;
+            y1 = pow(y, 5) + 5*x*y*(pow(x,3) - 2*x*y*y) + b;
             
             if(x1*x1 + y1*y1 > 4.0) return i;
             
             x = x1;
             y = y1;
+        }
         
+        return 0;
+    }else if(mode == 4){
+        
+        for(int i=1; i<NMAX; i++){
+            x1 = pow(x,6) - pow(y,6) + x*x*y*y*(11*y*y + 4*y - 15*x*x) + a;
+            y1 = x*y*(6*pow(x,4) + 2*pow(y,4) + 4*pow(y,3) - 20*x*x*y*y) + b;
+            
+            if(x1*x1 + y1*y1 > 4.0) return i;
+            
+            x = x1;
+            y = y1;
         }
         
         return 0;
@@ -137,7 +144,6 @@ void Mandelbrot::setGrayScale(float _grayScaleMax){
 }
 void Mandelbrot::setValueForCheckDivergence(float _num){
     valueForCheckDivergence = _num;
-    cout << valueForCheckDivergence << endl;
     
 }
 void Mandelbrot::setMode(int _mode){

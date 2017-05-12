@@ -18,7 +18,7 @@
 class GUIBase{
 public:
     ofxUISuperCanvas *gui;
-    int theme = 9;
+    int theme = 7;
     virtual void guiEvent(ofxUIEventArgs &e) = 0;
     virtual void setGUI() = 0;
     virtual void draw() = 0;

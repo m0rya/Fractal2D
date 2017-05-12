@@ -62,6 +62,25 @@ int Mandelbrot::checkDivergence(double a, double b){
             y = y1;
         }
         return 0;
+    }else if(mode == 3){
+        
+        double x2, y2;
+        
+        for(int i=1; i<NMAX; i++){
+            x2 = x*x;
+            y2 = y*y;
+            
+            x1 = (x2*y2-6) * (x+y) *x2*y2 + a;
+            y1 = 4*x*y * (x2-y2) * (x+y) + b;
+            
+            if(x1*x1 + y1*y1 > 4.0) return i;
+            
+            x = x1;
+            y = y1;
+        
+        }
+        
+        return 0;
     }
     
 }

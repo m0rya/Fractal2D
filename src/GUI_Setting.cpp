@@ -22,6 +22,7 @@ void GUI_Mandelbrot::setGUI(){
     names.push_back("0");
     names.push_back("1");
     names.push_back("2");
+    names.push_back("3");
     
     gui->addSpacer();
     gui->addSlider("Size", 0.2, 2.5, 1.0);

@@ -14,6 +14,10 @@ GumowskiMira::GumowskiMira(int _numPoint, int _width, int _height){
     width = _width;
     
     size = 30;
+    widthOfRect = 15;
+    
+    moving = ofVec2f(0, 0);
+    
     a = 0.08;
     b = 0.05;
     u = -0.2;
@@ -44,41 +48,44 @@ void GumowskiMira::calcGraph(){
     }
 }
 
-void GumowskiMira::drawGraph(){
-
+void GumowskiMira::draw(){
+    ofTranslate(moving.x, moving.y);
     for(int i=0; i<data.size(); i++){
         ofSetColor(ofColor(255, 150));
         ofFill();
-        ofDrawRectangle(data[i].x*size+width/2 - 40, data[i].y*size+height/2, 15, 15);
+        ofDrawRectangle(data[i].x*size+width/2 - 40, data[i].y*size+height/2, widthOfRect, widthOfRect);
     }
+    ofTranslate(-moving.x, -moving.y);
+    
 }
 
 
 //=======Setter========
 
 void GumowskiMira::setU(float _u){
-    if(u != _u){
-        u = _u;
-        calcGraph();
-    }else{
-        return;
-    }
+    u = _u;
+    calcGraph();
 }
 
 void GumowskiMira::setSize(int _size){
-    if(size != _size){
-        size = _size;
-        calcGraph();
-    }else{
-        return;
-    }
+    size = _size;
+    calcGraph();
 }
 
 void GumowskiMira::setNumOfPoint(int _numOfPoint){
-    if(numPoint != _numOfPoint){
-        numPoint = _numOfPoint;
-        calcGraph();
-    }else{
-        return;
-    }
+    numPoint = _numOfPoint;
+    calcGraph();
 }
+
+void GumowskiMira::setWidthOfRect(int _widthOfRect){
+    widthOfRect = _widthOfRect;
+    calcGraph();
+    
+}
+
+void GumowskiMira::move(ofVec2f _moving){
+    moving = ofVec2f(ofMap(_moving.x, 0.0, 1.0, -400, 200), ofMap(_moving.y, 0.0, 1.0, -400, 200));
+    
+}
+
+

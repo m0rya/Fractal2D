@@ -18,8 +18,10 @@ private:
     float u;
     double addingA, addingB, addingU;
     int size;
+    int widthOfRect;
     
     int numPoint = 1500;
+    ofVec2f moving;
     
     class pointData{
     public:
@@ -39,13 +41,16 @@ public:
     
     GumowskiMira(int _numPoint, int _width, int _height);
     void calcGraph();
-    void drawGraph();
+    void draw();
     
     //setter
     
     void setU(float _u);
     void setSize(int _size);
     void setNumOfPoint(int _numOfPoint);
+    void setWidthOfRect(int _widthOfRect);
+    void move(ofVec2f _moving);
+    
     
     
 };

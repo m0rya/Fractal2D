@@ -2,50 +2,97 @@
 GumowskiMira gm(1500, 500, 500);
 Mandelbrot man(500);
 
-GUI_Mandelbrot gui_man(man);;
+
+
+
+//GUI
+int drawMode = 0;
+
+GUI_Mandelbrot gui_man(man);
+GUI_GumowskiMira gui_gm(gm);
+
+GUIBase *guiArray[] = {&gui_gm, &gui_man};
+
+ofxUISuperCanvas *fractalList;
+ofxUIDropDownList *ddl;
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+    
     ofBackground(0, 0, 0);
-    //gm.calcGraph();
+    gm.calcGraph();
     man.calcGraph();
     
     
-    //gui
-    gui.setup();
-    gui.add(valueOfU.setup("value of u", -0.2, -1, 1));
-    gui.add(size.setup("size", 30, 10, 60));
-    gui.add(numOfPoint.setup("num of Point", 1500, 1000, 4000));
+    //GUI
+    fractalList = new ofxUISuperCanvas("Fractal List");
+    fractalList->addSpacer();
     
-    gui_man.setGUI();
+    vector<string> names;
+    names.push_back("GumowskiMira");
+    names.push_back("Mandelbrot");
+
+    
+    fractalList->setWidgetFontSize(OFX_UI_FONT_SMALL);
+    ddl = fractalList->addDropDownList("Fractal List", names);
+    ddl->setColorPadded(ofColor(0));
+    ddl->setAutoClose(true);
+    ddl->setShowCurrentSelected(true);
+    fractalList->autoSizeToFitWidgets();
+    ofAddListener(fractalList->newGUIEvent, this, &ofApp::guiEvent_ddl);
+    fractalList->setVisible(false);
+    fractalList->setTheme(0);
+    
+    for(int i=0; i<sizeof(guiArray)/sizeof(guiArray[0]); i++){
+        guiArray[i]->setGUI();
+    }
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
     
-    
-    gm.setU(valueOfU);
-    gm.setSize(size);
-    gm.setNumOfPoint(numOfPoint);
 
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
     ofBackground(0);
-    /*
-    gm.drawGraph();
-    
-    
-    if(bHideGui){
-        gui.draw();
-    }
-     */
-    
-    man.draw();
+   
 
+    guiArray[drawMode]->draw();
 }
 
+
+void ofApp::exit(){
+    delete fractalList;
+}
+
+void ofApp::guiEvent_ddl(ofxUIEventArgs &e){
+    string name = e.widget->getName();
+    
+    if(name == "Fractal List"){
+        ofxUIDropDownList *ddlList = (ofxUIDropDownList *)e.widget;
+        vector<ofxUIWidget *> &selected = ddlList->getSelected();
+        
+        if(selected.size() == 1){
+            string selectedName = selected[0]->getName();
+            
+            if(selectedName == "GumowskiMira"){
+                guiArray[drawMode]->gui->disable();
+                
+                drawMode = 0;
+                
+                guiArray[drawMode]->gui->enable();
+                
+            }else if(selectedName == "Mandelbrot"){
+                guiArray[drawMode]->gui->disable();
+                drawMode = 1;
+                guiArray[drawMode]->gui->enable();
+                
+            }
+        }
+    }
+}
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
     if(key == ' '){
@@ -55,8 +102,8 @@ void ofApp::keyPressed(int key){
     }
     
     if(key == 'h'){
-        //bHideGui = !bHideGui;
-        gui_man.toggleVisible();
+       
+        guiArray[drawMode]->gui->toggleVisible();
     }
 
 }
@@ -78,6 +125,13 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
+    if(!fractalList->isHit(x, y)) {
+        fractalList->setVisible(false);
+    }
+    if(button == 2){
+        fractalList->setPosition(x,y);
+        fractalList->setVisible(true);
+    }
    
 
 }

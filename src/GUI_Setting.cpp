@@ -135,6 +135,9 @@ void GUI_GumowskiMira::setGUI(){
     gui->addIntSlider("Size", 10, 100, 30);
     gui->addSpacer();
     gui->add2DPad("Move", ofVec2f(-1.0, 1.0), ofVec2f(-1.0, 1.0), ofVec2f(0.0, 0.0));
+    gui->addSpacer();
+    gui->addLabelButton("Toggle Lined", false);
+    
     
     gui->setTheme(theme);
     gui->setVisible(false);
@@ -166,6 +169,12 @@ void GUI_GumowskiMira::guiEvent(ofxUIEventArgs &e){
     }else if(name == "Move"){
         ofxUI2DPad *n = (ofxUI2DPad *)e.widget;
         obj->move(ofVec2f(n->getValue().x, n->getValue().y));
+        
+    }else if(name == "Toggle Lined"){
+        countForButton += 1;
+        if(countForButton %2 == 0){
+            obj->toggleLined();
+        }
     }
 }
 

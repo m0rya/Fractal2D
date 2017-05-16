@@ -50,10 +50,17 @@ void GumowskiMira::calcGraph(){
 
 void GumowskiMira::draw(){
     ofTranslate(moving.x, moving.y);
+    
+    
     for(int i=0; i<data.size(); i++){
-        ofSetColor(ofColor(255, 150));
-        ofFill();
-        ofDrawRectangle(data[i].x*size+width/2 - 40, data[i].y*size+height/2, widthOfRect, widthOfRect);
+        if(!lined){
+            ofSetColor(ofColor(255, 150));
+            ofFill();
+            ofDrawRectangle(data[i].x*size+width/2 - 40, data[i].y*size+height/2, widthOfRect, widthOfRect);
+        }else{
+            ofSetColor(ofColor(255, 150));
+            ofDrawLine(data[i].x*size+width/2-40, data[i].y*size+height/2, data[i+1].x*size+width/2-40, data[i+1].y*size+height/2);
+        }
     }
     ofTranslate(-moving.x, -moving.y);
     
@@ -88,4 +95,8 @@ void GumowskiMira::move(ofVec2f _moving){
     
 }
 
+void GumowskiMira::toggleLined(){
+    lined = !lined;
+    calcGraph();
+}
 

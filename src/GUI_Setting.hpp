@@ -26,7 +26,6 @@ public:
     virtual void draw() =0;
 };
 
-
 //=========Mandelbrot=========
 class GUI_Mandelbrot : public GUIBase{
 public:
@@ -54,6 +53,7 @@ public:
 
 class GUI_GumowskiMira : public GUIBase{
 public:
+    int countForButton = 0;
     
     GumowskiMira *obj;
     

@@ -23,6 +23,8 @@ private:
     int numPoint = 1500;
     ofVec2f moving;
     
+    bool lined = false;
+    
     class pointData{
     public:
         double x, y, Gx;
@@ -51,6 +53,7 @@ public:
     void setWidthOfRect(int _widthOfRect);
     void move(ofVec2f _moving);
     
+    void toggleLined();
     
     
 };
